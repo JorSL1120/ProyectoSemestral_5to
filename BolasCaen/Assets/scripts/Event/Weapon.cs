@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public void Attack()
+    [Header("Damage stats")]
+    public int damage;
+
+    public virtual void Attack()
     {
-        Debug.Log("Pum pum");
+        Debug.Log("k gaste");
     }
 }
