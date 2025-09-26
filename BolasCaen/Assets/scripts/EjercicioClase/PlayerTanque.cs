@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PlayerTanque : MonoBehaviour
 {
-    public int speed = 4;
+    public int speed;
+    public int speedRotation;
     private CharacterController cc;
 
     void Start()
@@ -14,21 +15,15 @@ public class PlayerTanque : MonoBehaviour
     void Update()
     {
         MovePlayer();
-        Rotate();
     }
 
     public void MovePlayer()
     {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        Vector3 move = new Vector3(xInput, 0f, yInput);
-        cc.Move(move * Time.deltaTime);
-    }
-
-    public void Rotate()
-    {
-        float xInput = Input.GetAxis("Horizontal2");
-        Quaternion rotate = Quaternion.Euler(xInput, 0f, 0f);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime);
+        float inputRotate = Input.GetAxis("Horizontal2");
+        transform.Rotate(Vector3.up * inputRotate * (speedRotation * Time.deltaTime));
+        Vector3 move = (transform.right * xInput) + (transform.forward * yInput);
+        cc.Move(move * (speed * Time.deltaTime));
     }
 }
